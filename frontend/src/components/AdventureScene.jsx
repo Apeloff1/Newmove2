@@ -66,13 +66,24 @@ export const AdventureScene = () => {
   const handleHotspotClick = (hotspot) => {
     if (hotspot.type === 'travel') {
       setIsTransitioning(true);
+      // Add transition effect
+      setActiveEffects(prev => [...prev, { type: 'transition', id: Date.now() }]);
       setTimeout(() => {
         interactWithHotspot(hotspot);
         setIsTransitioning(false);
+        setActiveEffects(prev => prev.filter(e => e.type !== 'transition'));
       }, 500);
     } else {
       interactWithHotspot(hotspot);
     }
+  };
+
+  // Handle player movement (click to move)
+  const handleSceneClick = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    setPlayerPosition({ x, y });
   };
 
   // Get icon for hotspot type
