@@ -217,9 +217,14 @@ export const ParticleEmitter = ({
   const canvasRef = useRef(null);
   const particlesRef = useRef([]);
   const animationRef = useRef(null);
-  const lastTimeRef = useRef(Date.now());
+  const lastTimeRef = useRef(null);
   const emitTimerRef = useRef(0);
   const isActiveRef = useRef(true);
+
+  // Initialize lastTimeRef on first render
+  useEffect(() => {
+    lastTimeRef.current = Date.now();
+  }, []);
 
   const config = useMemo(() => {
     const base = PARTICLE_TYPES[type] || PARTICLE_TYPES.sparkle;
