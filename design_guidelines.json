@@ -1,0 +1,134 @@
+{
+  "project_name": "Pirate Fishing RPG - Adventure Mode",
+  "design_philosophy": {
+    "core_concept": "Humongous & Tremendous Pixel Pirate Adventure",
+    "aesthetic": "Retro Pixel Art meets High-Fidelity Textures",
+    "principles": [
+      "Fusion: Mix 8-bit sprites with rich, realistic textures (wood, parchment) for UI depth.",
+      "Emotion: Witty, nostalgic, and epic. Every interaction should feel 'crunchy' and satisfying.",
+      "Content: Story-first. The UI should recede when exploring, and pop when interacting.",
+      "Contrast: Bright pixel art characters against moody, deep ocean backgrounds."
+    ]
+  },
+  "typography": {
+    "primary_font": "Press Start 2P",
+    "secondary_font": "Fredoka",
+    "dialogue_font": "VT323",
+    "usage": {
+      "headings": "font-pixel text-gold drop-shadow-md",
+      "body": "font-sans text-foreground",
+      "dialogue": "font-mono text-xl tracking-wide text-sepia-900"
+    }
+  },
+  "colors": {
+    "palette": {
+      "ocean_deep": "#0a1628",
+      "ocean_mid": "#1a3a5c",
+      "gold": "#ffd700",
+      "gold_dark": "#b8860b",
+      "parchment": "#f0e6d2",
+      "parchment_dim": "#e6d5b8",
+      "wood_dark": "#3e2723",
+      "wood_light": "#5d4037",
+      "danger": "#ef4444",
+      "success": "#22c55e"
+    },
+    "theme_strategy": "Dark mode default for world, Warm Parchment for UI panels"
+  },
+  "layout_system": {
+    "grid_strategy": "Bento Grid for Inventory, Full-screen Canvas for Adventure",
+    "spacing": {
+      "container_padding": "p-4 md:p-8",
+      "element_gap": "gap-4"
+    },
+    "z_index": {
+      "background": 0,
+      "scene_elements": 10,
+      "ui_overlay": 50,
+      "modal": 100,
+      "toast": 9999
+    }
+  },
+  "components": {
+    "AdventureScene": {
+      "description": "Full-screen container for the current location.",
+      "structure": "Relative container with absolute positioned InteractableHotspots.",
+      "styling": "w-full h-screen bg-ocean-deep overflow-hidden relative"
+    },
+    "InteractableHotspot": {
+      "description": "Clickable areas in the scene.",
+      "styling": "absolute cursor-pointer hover:scale-110 transition-transform duration-200 filter hover:brightness-125",
+      "animation": "animate-pulse-glow on hover"
+    },
+    "DialogueOverlay": {
+      "description": "Parchment-style modal for NPC conversations.",
+      "styling": "fixed bottom-4 left-4 right-4 md:left-1/4 md:right-1/4 bg-[url('https://images.pexels.com/photos/235985/pexels-photo-235985.jpeg')] bg-cover border-4 border-wood-dark rounded-lg p-6 shadow-2xl",
+      "text_style": "font-vt323 text-2xl text-black"
+    },
+    "InventoryGrid": {
+      "description": "Grid of items carried by the player.",
+      "styling": "grid grid-cols-4 gap-2 p-4 bg-black/80 backdrop-blur-md border-2 border-gold rounded-lg",
+      "item_styling": "w-16 h-16 border border-white/20 rounded hover:border-gold hover:bg-white/10 transition-all"
+    },
+    "QuestLog": {
+      "description": "Journal style tracker.",
+      "styling": "fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90vw] max-w-2xl h-[80vh] bg-[#f0e6d2] text-black font-vt323 p-8 rotate-1 shadow-2xl border-8 border-wood-dark"
+    }
+  },
+  "assets": {
+    "textures": {
+      "parchment": "https://images.pexels.com/photos/235985/pexels-photo-235985.jpeg",
+      "wood": "https://images.pexels.com/photos/1250283/pexels-photo-1250283.jpeg",
+      "tropical_bg": "https://images.pexels.com/photos/13727429/pexels-photo-13727429.jpeg"
+    },
+    "icons": {
+      "library": "lucide-react",
+      "mappings": {
+        "map": "Map",
+        "inventory": "Backpack",
+        "quest": "Scroll",
+        "close": "X",
+        "interact": "Hand",
+        "talk": "MessageCircle"
+      }
+    }
+  },
+  "animations": {
+    "transitions": {
+      "scene_fade": "transition-opacity duration-500",
+      "ui_slide": "transition-transform duration-300 ease-out"
+    },
+    "custom_keyframes": [
+      "animate-float",
+      "animate-shake",
+      "animate-scale-pop"
+    ]
+  },
+  "instructions_to_main_agent": [
+    "1. CREATE 'AdventureContext' to manage state (currentLocation, inventory, activeQuest, dialogueQueue).",
+    "2. IMPLEMENT 'LocationEngine' that renders different backgrounds and hotspots based on current location ID.",
+    "3. USE the provided texture URLs as background-image for the UI panels (Dialogue, Quest Log) to give a rich RPG feel.",
+    "4. REUSE existing CSS animations from App.css (e.g., animate-float for items, animate-shake for danger).",
+    "5. ENSURE all text in the DialogueOverlay uses the 'VT323' font for that retro RPG readability.",
+    "6. MOCK the interaction data (dialogue trees, item drops) in a separate 'gameData.js' file to keep components clean.",
+    "7. ADD 'data-testid' to all interactive elements (hotspots, choices, inventory slots) for testing."
+  ],
+  "universal_guidelines": [
+    "Dark colors look good when used independently without gradients. DO NOT use dark colors as gradients",
+    "Don't make generic centered layouts, simplistic gradients, and uniform styling.",
+    "Create depth through layered design elements with z-index hierarchy",
+    "Use glass-morphism effects with backdrop filters (12-24px blur)",
+    "You MUST NOT apply universal transition. Eg: transition: all. This results in breaking transforms.",
+    "You MUST NOT center align the app container, ie do not add .App { text-align: center; } in the css file.",
+    "Always use modern button styles like pill-shaped, or sharp button with interaction animations & color relevant to the app style",
+    "NEVER: use AI assistant Emoji characters like 🤖🧠 etc for icons.",
+    "Every interaction needs micro-animations - hover states, transitions, parallax effects, and entrance animations.",
+    "Use 2-3x more spacing than feels comfortable. Cramped designs look cheap.",
+    "Subtle grain textures, noise overlays, custom cursors, selection states, and loading animations: separates good from extraordinary.",
+    "Main agent relies on these image URLs. Missing categories = main agent will use placeholder text which is FORBIDDEN",
+    "Prioritize using pre-existing components from src/components/ui when applicable",
+    "Components MUST use named exports",
+    "Pages MUST use default exports",
+    "Use sonner for toasts"
+  ]
+}
