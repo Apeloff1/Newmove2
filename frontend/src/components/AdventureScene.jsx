@@ -235,7 +235,7 @@ export const AdventureScene = () => {
         {location.firstVisitDialogue && !discoveredLocations.includes(location.id + '_visited') && (
           <div className="absolute bottom-32 left-1/2 -translate-x-1/2 z-20 animate-slide-up">
             <div className="adventure-first-visit-banner">
-              <p className="text-amber-100 italic">"{location.firstVisitDialogue}"</p>
+              <p className="text-amber-100 italic">&ldquo;{location.firstVisitDialogue}&rdquo;</p>
             </div>
           </div>
         )}
