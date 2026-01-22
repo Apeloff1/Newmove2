@@ -637,10 +637,10 @@ export const NPCWorldRenderer = ({ playerPosition }) => {
             dialogue={dialogueNPC.dialogue}
             mood={dialogueNPC.controller.mood?.name}
             relationshipLevel={dialogueNPC.controller.memory.relationshipLevel}
-            onResponse={(response, index) => {
+            onResponse={(response) => {
               // Handle dialogue response
-              if (response.effect) {
-                dialogueNPC.controller.memory.relationshipLevel += response.effect;
+              if (response.effect && dialogueNPC.controller) {
+                dialogueNPC.controller.memory.updateRelationship('conversation_good', { impact: response.effect });
               }
             }}
             onClose={endDialogue}
