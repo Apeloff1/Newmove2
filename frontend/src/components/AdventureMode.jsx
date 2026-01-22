@@ -353,8 +353,8 @@ const AdventureModeInner = ({ onClose }) => {
       </div>
 
       {/* Bottom Action Bar */}
-      <div className="absolute bottom-0 left-0 right-0 z-40 p-4">
-        <div className="flex items-center justify-center gap-3">
+      <div className="absolute bottom-0 left-0 right-0 z-[200] p-4 pointer-events-none">
+        <div className="flex items-center justify-center gap-3 pointer-events-auto">
           {/* Map Button */}
           <button
             onClick={() => setShowMap(true)}
