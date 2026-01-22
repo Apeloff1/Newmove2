@@ -1,115 +1,125 @@
-# GO FISH! - Open World Pirate Adventure
-## Product Requirements Document
+# GO FISH! - Open World Pirate Fishing RPG
 
 ## Original Problem Statement
-- Import GitHub repository: https://github.com/Apeloff1/Lorebuffa
-- Fix UI proportioning issues - menu items unreachable
-- Add 3000+ lines of open world assets
-- Add 2000 lines of NPC pathing scripts
-- Add 30 quest chains with 10+ quests each
+User requested massive UI improvements and NPC AI logic enhancements for an existing fishing RPG game ("Newmove" from GitHub).
 
----
+**User Choices:**
+1. All UI improvements (animations, colors, effects, HUD, menus) - maximum mode
+2. Full AI system with patrol, chase, combat, dialogue/interaction
+3. RPG/Adventure style game
 
-## What's Been Implemented (Jan 21, 2026)
-
-### Latest Session - Massive Content Addition ✅
-
-#### UI Proportioning Fix
-- Fixed character creation modal overflow issues
-- Made origin selection list scrollable (max-height: 40vh)
-- Fixed adventure intro screen layout (overflow-y-auto)
-- All action buttons now accessible at bottom of screens
-
-#### New Content Files Added (6,466 lines total)
-
-| File | Lines | Description |
-|------|-------|-------------|
-| openWorldAssets.js | 1,452 | Environmental objects, wildlife, weather, ships, treasures |
-| openWorldAssetsExtended.js | 1,020 | Fishing spots, loot tables, crafting, achievements, skills |
-| npcPathing.js | 1,428 | Path nodes, schedules, patrol routes, behaviors, state machine |
-| npcPathingExtended.js | 578 | NPC definitions, dialogue trees, reactions, gift preferences |
-| questChains.js | 1,200 | 24 quest chains with full quest definitions |
-| questChainsExtended.js | 788 | 8 additional quest chains |
-
-#### Quest Chains (32 Total, 300+ Quests)
-1. The Curse of Saltbeard (Main Story) - 15 quests
-2. The Fisherman's Guild (Faction) - 12 quests
-3. The Merchant's Path (Faction) - 11 quests
-4. The Ricky Rivalry (Rival) - 10 quests
-5. Mysteries of the Deep (Exploration) - 12 quests
-6-10. Collection Quests (Fish, Shell, Treasure, Artifact, Recipe) - 10 each
-11-20. Location/NPC Quests (Tavern, Lighthouse, Blacksmith, etc) - 10 each
-21-22. Seasonal Quests (Spring, Summer, Autumn, Winter) - 10 each
-23-30. Extended Chains (Shipwright, Deep Sea, Weather, Companion, Ghosts, Cooking, Cartography, Legend)
-
-#### Open World Assets Include
-- 50+ environmental objects (trees, rocks, buildings)
-- 40+ wildlife creatures (sea, birds, land, mythical)
-- Complete weather system with 10+ types
-- Day/night cycle with 6 time periods
-- 4 seasons with unique effects
-- 10+ ship types (player & ambient)
-- 5 shipwrecks to explore
-- Treasure system with maps and collectibles
-- World events (ambient, scheduled, special)
-- Audio asset definitions
-
-#### NPC Pathing System Includes
-- Path node networks for all regions
-- 8 schedule templates (merchant, fisherman, guard, etc)
-- 8 patrol routes
-- Comprehensive behavior states (idle, movement, work, social, alert)
-- Interaction triggers (proximity, temporal, event-based)
-- Group behaviors (crowds, small groups, work crews)
-- Memory system with gossip propagation
-- A* pathfinding implementation
-- State machine for NPC AI
-- NPC Manager class
-
----
-
-## Code Statistics
-
-| Category | Count |
-|----------|-------|
-| **Total Lines** | ~90,000 |
-| New content added | 6,466 lines |
-| Frontend JS/JSX files | 120+ |
-| Frontend CSS files | 4 |
-| Backend Python files | 38 |
-| Quest Chains | 32 |
-| Total Quests | 300+ |
-
----
-
-## Tech Stack
-- **Frontend**: React.js, Tailwind CSS, Zustand state management
-- **Backend**: FastAPI (Python), Motor (async MongoDB)
+## Architecture & Tech Stack
+- **Frontend**: React.js with Tailwind CSS
+- **Backend**: FastAPI (Python)
 - **Database**: MongoDB
+- **State Management**: Zustand
+- **Styling**: Custom CSS animations, Pixel art fonts
 
----
+## Core Features (Existing)
+- Fishing game with 100+ fish species
+- Character creation with gender, background, appearance
+- Adventure mode with 5 regions
+- 125+ NPCs with dialogue
+- Quest system
+- Shop & inventory
+- Minigames
+- Weather system
+- Achievement system
 
-## Features Working
-- Full character creation system (5 steps)
-- Adventure Mode with open world hub
-- Witty renamed locations & NPCs
-- Fishing Competition vs Rival "Ricky"
-- Shop system (4 shops with items)
-- Enhanced Tacklebox (8 category tabs)
-- Minigames in Tavern
-- 125+ NPCs across 5 regions
+## What's Been Implemented (Jan 2026)
 
----
+### New NPC AI System (`/app/frontend/src/lib/npcAI.js`)
+- 3000+ lines of AI logic
+- Finite State Machine (FSM) for behavior control
+- A* Pathfinding with obstacle avoidance
+- Mood/Emotion system (12 moods affecting prices, dialogue, interactions)
+- NPCMemory class tracking 50+ interactions per NPC
+- Relationship tiers (enemy → best_friend)
+- Chase/Flee/Combat/Dialogue/Patrol behaviors
+- Schedule system for daily NPC routines
+- NPCWorldManager for managing all NPCs
 
-## Backlog
-- Integrate new quest system into UI
-- Integrate NPC pathing into game loop
-- Add weather effects to fishing
-- Mobile responsive improvements
+### Enhanced NPC Sprites (`/app/frontend/src/components/EnhancedNPCSprites.jsx`)
+- Pixel art SVG character rendering
+- 6 color palettes (merchant, fisherman, pirate, noble, witch, ghost, skeleton)
+- Multi-frame animations (idle, walk, run, talk, fish, sleep, attack)
+- Emotion bubbles (happy, angry, sad, surprised, love, confused, sleepy)
+- Quest markers with bounce animation
+- Relationship heart indicators
+- State indicators (sleeping, working, fishing, talking)
+- Hover effects with glow
 
----
+### UI Effects System (`/app/frontend/src/components/UIEffects.jsx`)
+- Particle system (sparkle, confetti, coins, hearts, stars, bubbles, fire, snow, leaves, petals, XP)
+- Screen effects (shake, flash, vignette, glow)
+- Reward popup with confetti celebration
+- Achievement celebration banner
+- Floating damage/XP text
+- Combo indicator
+- Level up celebration
+- Weather overlays (rain, snow, leaves, petals)
 
-## Theme/Tone
-- Witty, self-aware humor
-- Characters acknowledge absurdity of situations
-- Avoids copyright by being original
+### Enhanced World System (`/app/frontend/src/components/EnhancedNPCWorld.jsx`)
+- NPCWorldProvider context for world state
+- EnhancedDialogueBox with mood-based styling
+- Typewriter effect for dialogue
+- Quick actions (Gift, Ask About, Quest)
+- Relationship-based greetings
+- NPCInfoPanel with relationship meter
+
+### Updated Adventure Scene (`/app/frontend/src/components/AdventureScene.jsx`)
+- Day/Night cycle with visual overlays
+- Weather integration per location
+- Mini-map with player/NPC positions
+- Click-to-move player indicator
+- 15 pre-generated ambient particles
+- Scene description with location name
+
+### CSS Animations (`/app/frontend/src/adventureMode.css`)
+- 50+ new keyframe animations
+- NPC walking, running, idle, talking, sleeping, fishing animations
+- Shake, wiggle, sparkle, spin-slow animations
+- Quest marker bounce, reward entry, level up explosion
+- Dialogue typewriter cursor, response hover effects
+- Mini-map styles
+- Achievement toast animations
+- Tooltip enhancements
+
+## API Endpoints (Existing)
+- `/api/npc/dialogue/{npc_id}` - Get NPC dialogue
+- `/api/npc/relationship` - Track relationships
+- `/api/quests/*` - Quest management
+- `/api/inventory/*` - Inventory management
+- All other existing endpoints unchanged
+
+## Prioritized Backlog
+
+### P0 (Critical)
+- [x] NPC AI system implementation
+- [x] Enhanced NPC sprites
+- [x] UI effects library
+- [x] World integration
+
+### P1 (High Priority)
+- [ ] Full quest chain integration with NPCs
+- [ ] NPC schedule persistence to MongoDB
+- [ ] Combat competition AI improvements
+- [ ] Gift system integration with inventory
+
+### P2 (Medium Priority)
+- [ ] NPC voice lines/sound effects
+- [ ] More weather effects per region
+- [ ] Companion NPC system
+- [ ] NPC group behaviors (crowds)
+
+### P3 (Future)
+- [ ] Procedural NPC generation
+- [ ] Dynamic event system
+- [ ] Multiplayer NPC interactions
+- [ ] NPC romance system
+
+## Next Tasks
+1. Test full dialogue tree flow
+2. Verify gift system works with NPC preferences
+3. Add more particle effects for fishing catches
+4. Polish competition AI difficulty scaling
