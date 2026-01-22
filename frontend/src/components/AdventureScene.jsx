@@ -45,21 +45,17 @@ export const AdventureScene = () => {
   const [activeEffects, setActiveEffects] = useState([]);
 
   // Get weather for current location
+  const locationId = location?.id;
   const weather = useMemo(() => 
-    LOCATION_WEATHER[location?.id] || { type: null, intensity: 0 },
-    [location?.id]
+    LOCATION_WEATHER[locationId] || { type: null, intensity: 0 },
+    [locationId]
   );
 
   // Day/Night cycle based on time
   useEffect(() => {
     const hour = new Date().getHours();
-    if (hour >= 6 && hour < 18) {
-      setDayNightPhase('day');
-    } else if (hour >= 18 && hour < 20) {
-      setDayNightPhase('evening');
-    } else {
-      setDayNightPhase('night');
-    }
+    const newPhase = hour >= 6 && hour < 18 ? 'day' : hour >= 18 && hour < 20 ? 'evening' : 'night';
+    setDayNightPhase(prev => prev !== newPhase ? newPhase : prev);
   }, [currentTime]);
 
   // Handle hotspot interaction
