@@ -366,7 +366,7 @@ export const NPCWorldProvider = ({ children, region = 'port_fortune' }) => {
   const [hoveredNPC, setHoveredNPC] = useState(null);
   const [floatingTexts, setFloatingTexts] = useState([]);
   const [activeReward, setActiveReward] = useState(null);
-  const [worldTime, setWorldTime] = useState(Date.now());
+  const [worldTime, setWorldTime] = useState(() => Date.now());
   
   const updateIntervalRef = useRef(null);
 
