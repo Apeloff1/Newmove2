@@ -38,24 +38,29 @@ export const AdventureScene = () => {
   
   const location = getCurrentLocation();
   const [hoveredHotspot, setHoveredHotspot] = useState(null);
-  const [particles, setParticles] = useState([]);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [showMiniMap, setShowMiniMap] = useState(true);
+  const [playerPosition, setPlayerPosition] = useState({ x: 400, y: 300 });
+  const [dayNightPhase, setDayNightPhase] = useState('day');
+  const [activeEffects, setActiveEffects] = useState([]);
 
-  // Spawn ambient particles
+  // Get weather for current location
+  const weather = useMemo(() => 
+    LOCATION_WEATHER[location?.id] || { type: null, intensity: 0 },
+    [location?.id]
+  );
+
+  // Day/Night cycle based on time
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (Math.random() > 0.7) {
-        const newParticle = {
-          id: Date.now(),
-          x: Math.random() * 100,
-          y: Math.random() * 100,
-          type: ['✨', '💫', '🌊', '🐚'][Math.floor(Math.random() * 4)]
-        };
-        setParticles(prev => [...prev.slice(-10), newParticle]);
-      }
-    }, 2000);
-    return () => clearInterval(interval);
-  }, []);
+    const hour = new Date().getHours();
+    if (hour >= 6 && hour < 18) {
+      setDayNightPhase('day');
+    } else if (hour >= 18 && hour < 20) {
+      setDayNightPhase('evening');
+    } else {
+      setDayNightPhase('night');
+    }
+  }, [currentTime]);
 
   // Handle hotspot interaction
   const handleHotspotClick = (hotspot) => {
