@@ -299,8 +299,8 @@ const AdventureModeInner = ({ onClose }) => {
       )}
 
       {/* Top HUD */}
-      <div className="absolute top-0 left-0 right-0 z-40 p-4">
-        <div className="flex items-center justify-between">
+      <div className="absolute top-0 left-0 right-0 z-[200] p-4 pointer-events-none">
+        <div className="flex items-center justify-between pointer-events-auto">
           {/* Character Badge */}
           <button 
             onClick={() => setShowCharacterSheet(true)}
