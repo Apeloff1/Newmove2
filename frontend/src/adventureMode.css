@@ -865,3 +865,543 @@
   animation: float 3s ease-in-out infinite;
 }
 
+
+
+/* ============================================================================
+   ENHANCED NPC & UI ANIMATIONS
+   ============================================================================ */
+
+/* NPC Walking Animation */
+@keyframes walk {
+  0%, 100% { transform: translateY(0); }
+  25% { transform: translateY(-2px); }
+  75% { transform: translateY(-2px); }
+}
+
+.animate-walk {
+  animation: walk 0.4s ease-in-out infinite;
+}
+
+/* NPC Running Animation */
+@keyframes run {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.animate-run {
+  animation: run 0.2s ease-in-out infinite;
+}
+
+/* NPC Idle Breathing */
+@keyframes idle {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(1.02); }
+}
+
+.animate-idle {
+  animation: idle 2s ease-in-out infinite;
+}
+
+/* NPC Talking */
+@keyframes talk {
+  0%, 100% { transform: scaleX(1); }
+  25%, 75% { transform: scaleX(1.05); }
+}
+
+.animate-talk {
+  animation: talk 0.3s ease-in-out infinite;
+}
+
+/* NPC Sleeping */
+@keyframes sleep {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  50% { transform: translateY(2px) rotate(-2deg); }
+}
+
+.animate-sleep {
+  animation: sleep 3s ease-in-out infinite;
+}
+
+/* NPC Fishing */
+@keyframes fish {
+  0%, 70%, 100% { transform: rotate(0); }
+  80%, 90% { transform: rotate(-10deg); }
+  85% { transform: rotate(10deg); }
+}
+
+.animate-fish {
+  animation: fish 3s ease-in-out infinite;
+}
+
+/* Shake Animation */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+  20%, 40%, 60%, 80% { transform: translateX(4px); }
+}
+
+.animate-shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+/* Wiggle Animation */
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0); }
+  25% { transform: rotate(-5deg); }
+  75% { transform: rotate(5deg); }
+}
+
+.animate-wiggle {
+  animation: wiggle 0.5s ease-in-out infinite;
+}
+
+/* Sparkle Animation */
+@keyframes sparkle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.2); }
+}
+
+.animate-sparkle {
+  animation: sparkle 0.6s ease-in-out infinite;
+}
+
+/* Slow Spin */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 3s linear infinite;
+}
+
+/* Slide Up Animation */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-slide-up {
+  animation: slideUp 0.4s ease-out forwards;
+}
+
+/* Heart Beat Animation */
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  10%, 30% { transform: scale(1.1); }
+  20% { transform: scale(0.95); }
+}
+
+.animate-heartbeat {
+  animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+/* Glow Pulse */
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
+  50% { box-shadow: 0 0 25px rgba(255, 215, 0, 0.8), 0 0 50px rgba(255, 215, 0, 0.4); }
+}
+
+.animate-glow-pulse {
+  animation: glowPulse 2s ease-in-out infinite;
+}
+
+/* Quest Marker Bounce */
+@keyframes questBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.animate-quest-bounce {
+  animation: questBounce 0.8s ease-in-out infinite;
+}
+
+/* Reward Popup Entry */
+@keyframes rewardEntry {
+  0% { opacity: 0; transform: scale(0.5) translateY(50px); }
+  60% { transform: scale(1.05) translateY(0); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.animate-reward-entry {
+  animation: rewardEntry 0.5s ease-out forwards;
+}
+
+/* Text Reveal */
+@keyframes textReveal {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+.animate-text-reveal {
+  animation: textReveal 0.5s ease-out forwards;
+}
+
+/* Combat Flash */
+@keyframes combatFlash {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.5); }
+}
+
+.animate-combat-flash {
+  animation: combatFlash 0.15s ease-out;
+}
+
+/* Damage Number Float */
+@keyframes damageFloat {
+  0% { opacity: 1; transform: translateY(0) scale(1); }
+  50% { opacity: 1; transform: translateY(-30px) scale(1.2); }
+  100% { opacity: 0; transform: translateY(-50px) scale(0.8); }
+}
+
+.animate-damage-float {
+  animation: damageFloat 1s ease-out forwards;
+}
+
+/* Level Up Explosion */
+@keyframes levelUpExplosion {
+  0% { transform: scale(0); opacity: 0; }
+  50% { transform: scale(1.5); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.animate-level-up {
+  animation: levelUpExplosion 0.6s ease-out forwards;
+}
+
+/* Coin Collect */
+@keyframes coinCollect {
+  0% { transform: scale(1) rotate(0); }
+  50% { transform: scale(1.3) rotate(180deg); }
+  100% { transform: scale(0) rotate(360deg); opacity: 0; }
+}
+
+.animate-coin-collect {
+  animation: coinCollect 0.5s ease-in forwards;
+}
+
+/* ============================================================================
+   ENHANCED NPC SPRITE STYLES
+   ============================================================================ */
+
+.npc-sprite {
+  position: absolute;
+  cursor: pointer;
+  transition: transform 0.2s ease-out;
+}
+
+.npc-sprite:hover {
+  transform: scale(1.1);
+  z-index: 100;
+}
+
+.npc-sprite.selected {
+  filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.8));
+}
+
+.npc-quest-marker {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: questBounce 0.8s ease-in-out infinite;
+}
+
+.npc-emotion-bubble {
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  border-radius: 50%;
+  padding: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.npc-name-tag {
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  padding: 2px 8px;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 10px;
+  font-size: 10px;
+  color: white;
+}
+
+/* ============================================================================
+   DIALOGUE BOX ENHANCEMENTS
+   ============================================================================ */
+
+.dialogue-typewriter {
+  overflow: hidden;
+  border-right: 2px solid rgba(255, 215, 0, 0.7);
+  animation: typewriterCursor 0.5s step-end infinite;
+}
+
+@keyframes typewriterCursor {
+  50% { border-color: transparent; }
+}
+
+.dialogue-response {
+  transition: all 0.2s ease-out;
+  border: 1px solid transparent;
+}
+
+.dialogue-response:hover {
+  background: rgba(255, 215, 0, 0.1);
+  border-color: rgba(255, 215, 0, 0.3);
+  transform: translateX(5px);
+}
+
+.dialogue-response.selected {
+  background: rgba(255, 215, 0, 0.2);
+  border-color: rgba(255, 215, 0, 0.5);
+}
+
+/* ============================================================================
+   PARTICLE SYSTEM STYLES
+   ============================================================================ */
+
+.particle-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.floating-text {
+  position: fixed;
+  pointer-events: none;
+  font-weight: bold;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  z-index: 10000;
+}
+
+/* ============================================================================
+   WEATHER EFFECTS
+   ============================================================================ */
+
+.weather-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 50;
+}
+
+.weather-rain {
+  background: linear-gradient(180deg, rgba(50, 80, 120, 0.3) 0%, transparent 100%);
+}
+
+.weather-fog {
+  background: radial-gradient(ellipse at center, transparent 30%, rgba(200, 200, 220, 0.4) 100%);
+}
+
+.weather-night {
+  background: linear-gradient(180deg, rgba(10, 10, 30, 0.5) 0%, rgba(20, 20, 50, 0.3) 100%);
+}
+
+/* ============================================================================
+   COMBO & SCORE DISPLAY
+   ============================================================================ */
+
+.combo-indicator {
+  position: fixed;
+  pointer-events: none;
+  text-align: center;
+  z-index: 500;
+}
+
+.combo-text {
+  font-family: 'Press Start 2P', cursive;
+  text-shadow: 
+    0 0 20px currentColor,
+    0 0 40px currentColor;
+}
+
+.score-popup {
+  position: fixed;
+  pointer-events: none;
+  font-family: 'Press Start 2P', cursive;
+  animation: scorePopup 1.5s ease-out forwards;
+}
+
+@keyframes scorePopup {
+  0% { opacity: 1; transform: translateY(0) scale(1); }
+  70% { opacity: 1; transform: translateY(-40px) scale(1.1); }
+  100% { opacity: 0; transform: translateY(-60px) scale(0.9); }
+}
+
+/* ============================================================================
+   MINI-MAP STYLES
+   ============================================================================ */
+
+.mini-map {
+  position: fixed;
+  bottom: 100px;
+  right: 20px;
+  width: 150px;
+  height: 150px;
+  background: rgba(10, 22, 40, 0.9);
+  border: 2px solid rgba(255, 215, 0, 0.3);
+  border-radius: 10px;
+  overflow: hidden;
+  z-index: 100;
+}
+
+.mini-map-npc {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #22c55e;
+  transform: translate(-50%, -50%);
+}
+
+.mini-map-player {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ffd700;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+}
+
+.mini-map-quest {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: #ef4444;
+  transform: translate(-50%, -50%) rotate(45deg);
+  animation: questBounce 0.8s ease-in-out infinite;
+}
+
+/* ============================================================================
+   TOOLTIP ENHANCEMENTS
+   ============================================================================ */
+
+.enhanced-tooltip {
+  position: absolute;
+  padding: 12px 16px;
+  background: linear-gradient(180deg, rgba(26, 58, 92, 0.98) 0%, rgba(10, 22, 40, 0.98) 100%);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  pointer-events: none;
+  animation: tooltipFade 0.2s ease-out;
+}
+
+@keyframes tooltipFade {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.tooltip-title {
+  font-weight: bold;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+
+.tooltip-description {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.tooltip-stats {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tooltip-stat {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+}
+
+/* ============================================================================
+   RELATIONSHIP METER
+   ============================================================================ */
+
+.relationship-meter {
+  display: flex;
+  gap: 2px;
+}
+
+.relationship-heart {
+  width: 12px;
+  height: 12px;
+  transition: transform 0.2s, filter 0.2s;
+}
+
+.relationship-heart.filled {
+  filter: drop-shadow(0 0 4px rgba(255, 105, 180, 0.6));
+}
+
+.relationship-heart:hover {
+  transform: scale(1.2);
+}
+
+/* ============================================================================
+   ACHIEVEMENT TOAST
+   ============================================================================ */
+
+.achievement-toast {
+  position: fixed;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+}
+
+.achievement-toast-inner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 24px;
+  background: linear-gradient(90deg, rgba(255, 215, 0, 0.2) 0%, rgba(255, 165, 0, 0.2) 100%);
+  border: 2px solid rgba(255, 215, 0, 0.5);
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(255, 215, 0, 0.3);
+  animation: achievementSlide 0.5s ease-out;
+}
+
+@keyframes achievementSlide {
+  from { 
+    opacity: 0; 
+    transform: translateY(-30px) scale(0.9); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0) scale(1); 
+  }
+}
+
+.achievement-icon {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  animation: achievementBounce 0.5s ease-out 0.3s both;
+}
+
+@keyframes achievementBounce {
+  0% { transform: scale(0); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
