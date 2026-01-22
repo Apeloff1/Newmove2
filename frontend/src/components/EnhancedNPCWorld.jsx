@@ -159,7 +159,7 @@ const EnhancedDialogueBox = ({
           onClick={skipTyping}
         >
           <p className="text-white text-lg leading-relaxed font-serif italic">
-            "{displayedText}"
+            &ldquo;{displayedText}&rdquo;
             {isTyping && <span className="animate-pulse ml-1">▌</span>}
           </p>
         </div>
