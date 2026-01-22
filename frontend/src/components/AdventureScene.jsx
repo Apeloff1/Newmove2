@@ -99,140 +99,239 @@ export const AdventureScene = () => {
   };
 
   return (
-    <div 
-      className={`adventure-scene relative w-full h-full overflow-hidden transition-opacity duration-500 ${
-        isTransitioning ? 'opacity-0' : 'opacity-100'
-      }`}
-      style={{ background: location.background }}
-      data-testid={`scene-${location.id}`}
-    >
-      {/* Ambient Background Layer */}
-      <div className="absolute inset-0 pointer-events-none">
-        {/* Water effect for maritime locations */}
-        {['docks', 'mermaid_lagoon', 'shipwreck_beach'].includes(location.id) && (
-          <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-blue-900/50 to-transparent">
-            <svg className="w-full h-full opacity-30" viewBox="0 0 1440 120" preserveAspectRatio="none">
-              <path 
-                d="M0,60 C240,100 480,20 720,60 C960,100 1200,20 1440,60 L1440,120 L0,120 Z" 
-                fill="#1a4a6a"
-                className="animate-wave-slow"
-              />
-            </svg>
-          </div>
+    <NPCWorldProvider region={location?.id || 'port_fortune'}>
+      <div 
+        className={`adventure-scene relative w-full h-full overflow-hidden transition-opacity duration-500 ${
+          isTransitioning ? 'opacity-0' : 'opacity-100'
+        }`}
+        style={{ background: location.background }}
+        onClick={handleSceneClick}
+        data-testid={`scene-${location.id}`}
+      >
+        {/* Day/Night Overlay */}
+        {dayNightPhase === 'night' && (
+          <div className="absolute inset-0 bg-gradient-to-b from-blue-950/40 to-purple-950/30 pointer-events-none z-[5]" />
         )}
-        
-        {/* Ambient particles */}
-        {particles.map(particle => (
-          <div
-            key={particle.id}
-            className="absolute animate-float-up text-2xl opacity-40"
-            style={{ left: `${particle.x}%`, top: `${particle.y}%` }}
-          >
-            {particle.type}
-          </div>
-        ))}
-      </div>
+        {dayNightPhase === 'evening' && (
+          <div className="absolute inset-0 bg-gradient-to-b from-orange-900/20 to-purple-900/20 pointer-events-none z-[5]" />
+        )}
 
-      {/* Scene Description Banner */}
-      <div className="absolute top-20 left-1/2 -translate-x-1/2 z-20 max-w-xl">
-        <div className="adventure-description-banner">
-          <h2 className="font-pixel text-xl text-gold mb-2">{location.name}</h2>
-          <p className="text-sm text-amber-100/80 leading-relaxed">
-            {location.description}
-          </p>
-        </div>
-      </div>
+        {/* Weather Effects */}
+        {weather.type && (
+          <WeatherOverlay type={weather.type} intensity={weather.intensity} />
+        )}
 
-      {/* Interactive Hotspots */}
-      <div className="absolute inset-0 z-10">
-        {location.hotspots?.map((hotspot) => (
-          <button
-            key={hotspot.id}
-            className={`adventure-hotspot ${
-              hoveredHotspot === hotspot.id ? 'adventure-hotspot-active' : ''
-            } ${hotspot.type === 'npc' ? 'adventure-hotspot-npc' : ''} ${
-              hotspot.type === 'travel' ? 'adventure-hotspot-travel' : ''
-            }`}
-            style={{
-              left: `${hotspot.x}%`,
-              top: `${hotspot.y}%`,
-            }}
-            onClick={() => handleHotspotClick(hotspot)}
-            onMouseEnter={() => setHoveredHotspot(hotspot.id)}
-            onMouseLeave={() => setHoveredHotspot(null)}
-            data-testid={`hotspot-${hotspot.id}`}
-          >
-            {/* Hotspot Icon */}
-            <div className="adventure-hotspot-icon">
-              <span className="text-2xl">{hotspot.icon}</span>
-            </div>
-
-            {/* Hotspot Label */}
-            <div className={`adventure-hotspot-label ${
-              hoveredHotspot === hotspot.id ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
-            }`}>
-              <div className="flex items-center gap-2">
-                {getHotspotIcon(hotspot)}
-                <span>{hotspot.name}</span>
-              </div>
-              {hotspot.requiresItem && (
-                <div className="text-xs text-red-400 mt-1">🔒 Requires item</div>
-              )}
-            </div>
-
-            {/* Pulse effect for NPCs */}
-            {hotspot.type === 'npc' && (
-              <div className="adventure-hotspot-pulse" />
-            )}
-          </button>
-        ))}
-      </div>
-
-      {/* First Visit Message */}
-      {location.firstVisitDialogue && !discoveredLocations.includes(location.id + '_visited') && (
-        <div className="absolute bottom-32 left-1/2 -translate-x-1/2 z-20 animate-slide-up">
-          <div className="adventure-first-visit-banner">
-            <p className="text-amber-100 italic">"{location.firstVisitDialogue}"</p>
-          </div>
-        </div>
-      )}
-
-      {/* Ambient decorations based on location */}
-      {location.ambiance === 'busy' && (
+        {/* Ambient Background Layer */}
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-20 right-10 text-4xl animate-float" style={{ animationDelay: '0s' }}>🕊️</div>
-          <div className="absolute top-40 left-20 text-3xl animate-float" style={{ animationDelay: '1s' }}>🕊️</div>
-        </div>
-      )}
-
-      {location.ambiance === 'maritime' && (
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-30 right-20 text-5xl animate-float" style={{ animationDelay: '0.5s' }}>⛵</div>
-          <div className="absolute bottom-40 left-10 text-3xl animate-float" style={{ animationDelay: '1.5s' }}>🦀</div>
-        </div>
-      )}
-
-      {location.ambiance === 'mystical' && (
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          {[...Array(10)].map((_, i) => (
+          {/* Water effect for maritime locations */}
+          {['docks', 'mermaid_lagoon', 'shipwreck_beach'].includes(location.id) && (
+            <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-blue-900/50 to-transparent">
+              <svg className="w-full h-full opacity-30" viewBox="0 0 1440 120" preserveAspectRatio="none">
+                <path 
+                  d="M0,60 C240,100 480,20 720,60 C960,100 1200,20 1440,60 L1440,120 L0,120 Z" 
+                  fill="#1a4a6a"
+                  className="animate-wave-slow"
+                />
+              </svg>
+            </div>
+          )}
+          
+          {/* Ambient particles - pre-generated for performance */}
+          {AMBIENT_PARTICLES.map(particle => (
             <div
-              key={i}
-              className="absolute animate-float text-2xl opacity-50"
-              style={{
-                left: `${10 + i * 10}%`,
-                top: `${20 + (i % 3) * 20}%`,
-                animationDelay: `${i * 0.3}s`
+              key={particle.id}
+              className="absolute animate-float text-2xl opacity-40"
+              style={{ 
+                left: `${particle.x}%`, 
+                top: `${particle.y}%`,
+                animationDelay: `${particle.delay}s`,
+                transform: `scale(${particle.scale})`,
               }}
             >
-              ✨
+              {particle.icon}
             </div>
           ))}
         </div>
-      )}
 
-      {/* Vignette effect */}
-      <div className="absolute inset-0 pointer-events-none bg-radial-vignette" />
-    </div>
+        {/* Scene Description Banner */}
+        <div className="absolute top-20 left-1/2 -translate-x-1/2 z-20 max-w-xl">
+          <div className="adventure-description-banner animate-slide-up">
+            <div className="flex items-center justify-center gap-2 mb-2">
+              <Compass className="w-5 h-5 text-gold animate-spin-slow" style={{ animationDuration: '10s' }} />
+              <h2 className="font-pixel text-xl text-gold">{location.name}</h2>
+            </div>
+            <p className="text-sm text-amber-100/80 leading-relaxed">
+              {location.description}
+            </p>
+            {/* Time indicator */}
+            <div className="flex items-center justify-center gap-2 mt-2 text-xs text-amber-200/60">
+              <span>{dayNightPhase === 'day' ? '☀️' : dayNightPhase === 'evening' ? '🌅' : '🌙'}</span>
+              <span className="capitalize">{dayNightPhase}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Enhanced NPC World Layer */}
+        <NPCWorldRenderer playerPosition={playerPosition} />
+
+        {/* Interactive Hotspots */}
+        <div className="absolute inset-0 z-10">
+          {location.hotspots?.map((hotspot) => (
+            <button
+              key={hotspot.id}
+              className={`adventure-hotspot ${
+                hoveredHotspot === hotspot.id ? 'adventure-hotspot-active' : ''
+              } ${hotspot.type === 'npc' ? 'adventure-hotspot-npc' : ''} ${
+                hotspot.type === 'travel' ? 'adventure-hotspot-travel' : ''
+              }`}
+              style={{
+                left: `${hotspot.x}%`,
+                top: `${hotspot.y}%`,
+              }}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleHotspotClick(hotspot);
+              }}
+              onMouseEnter={() => setHoveredHotspot(hotspot.id)}
+              onMouseLeave={() => setHoveredHotspot(null)}
+              data-testid={`hotspot-${hotspot.id}`}
+            >
+              {/* Hotspot Icon */}
+              <div className="adventure-hotspot-icon">
+                <span className="text-2xl">{hotspot.icon}</span>
+              </div>
+
+              {/* Hotspot Label */}
+              <div className={`adventure-hotspot-label ${
+                hoveredHotspot === hotspot.id ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
+              }`}>
+                <div className="flex items-center gap-2">
+                  {getHotspotIcon(hotspot)}
+                  <span>{hotspot.name}</span>
+                </div>
+                {hotspot.requiresItem && (
+                  <div className="text-xs text-red-400 mt-1">🔒 Requires item</div>
+                )}
+              </div>
+
+              {/* Pulse effect for NPCs */}
+              {hotspot.type === 'npc' && (
+                <div className="adventure-hotspot-pulse" />
+              )}
+            </button>
+          ))}
+        </div>
+
+        {/* Player Indicator */}
+        <div 
+          className="absolute w-8 h-8 pointer-events-none z-30 transition-all duration-300"
+          style={{
+            left: playerPosition.x,
+            top: playerPosition.y,
+            transform: 'translate(-50%, -50%)',
+          }}
+        >
+          <div className="w-full h-full bg-amber-400/30 rounded-full animate-ping" />
+          <div className="absolute inset-0 w-full h-full bg-amber-400/60 rounded-full" />
+        </div>
+
+        {/* First Visit Message */}
+        {location.firstVisitDialogue && !discoveredLocations.includes(location.id + '_visited') && (
+          <div className="absolute bottom-32 left-1/2 -translate-x-1/2 z-20 animate-slide-up">
+            <div className="adventure-first-visit-banner">
+              <p className="text-amber-100 italic">"{location.firstVisitDialogue}"</p>
+            </div>
+          </div>
+        )}
+
+        {/* Ambient decorations based on location */}
+        {location.ambiance === 'busy' && (
+          <div className="absolute inset-0 pointer-events-none">
+            <div className="absolute top-20 right-10 text-4xl animate-float" style={{ animationDelay: '0s' }}>🕊️</div>
+            <div className="absolute top-40 left-20 text-3xl animate-float" style={{ animationDelay: '1s' }}>🕊️</div>
+          </div>
+        )}
+
+        {location.ambiance === 'maritime' && (
+          <div className="absolute inset-0 pointer-events-none">
+            <div className="absolute top-30 right-20 text-5xl animate-float" style={{ animationDelay: '0.5s' }}>⛵</div>
+            <div className="absolute bottom-40 left-10 text-3xl animate-float" style={{ animationDelay: '1.5s' }}>🦀</div>
+          </div>
+        )}
+
+        {location.ambiance === 'mystical' && (
+          <div className="absolute inset-0 pointer-events-none overflow-hidden">
+            {[...Array(10)].map((_, i) => (
+              <div
+                key={i}
+                className="absolute animate-float text-2xl opacity-50"
+                style={{
+                  left: `${10 + i * 10}%`,
+                  top: `${20 + (i % 3) * 20}%`,
+                  animationDelay: `${i * 0.3}s`
+                }}
+              >
+                ✨
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Mini-Map Toggle */}
+        {showMiniMap && (
+          <div className="mini-map shadow-lg">
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-900/90 to-blue-950/90" />
+            <div className="absolute inset-2 border border-amber-500/30 rounded-lg" />
+            {/* Player on mini-map */}
+            <div 
+              className="mini-map-player"
+              style={{
+                left: `${(playerPosition.x / 800) * 100}%`,
+                top: `${(playerPosition.y / 600) * 100}%`,
+              }}
+            />
+            {/* NPCs on mini-map */}
+            {location.hotspots?.filter(h => h.type === 'npc').map((hotspot, i) => (
+              <div
+                key={hotspot.id}
+                className="mini-map-npc"
+                style={{
+                  left: `${hotspot.x}%`,
+                  top: `${hotspot.y}%`,
+                }}
+              />
+            ))}
+            {/* Quest markers */}
+            {location.hotspots?.filter(h => h.hasQuest).map((hotspot, i) => (
+              <div
+                key={`quest-${hotspot.id}`}
+                className="mini-map-quest"
+                style={{
+                  left: `${hotspot.x}%`,
+                  top: `${hotspot.y}%`,
+                }}
+              />
+            ))}
+            {/* Location label */}
+            <div className="absolute bottom-1 left-1/2 -translate-x-1/2 text-[8px] text-amber-200/70 whitespace-nowrap">
+              {location.name}
+            </div>
+          </div>
+        )}
+
+        {/* Mini-map toggle button */}
+        <button
+          onClick={() => setShowMiniMap(!showMiniMap)}
+          className="fixed bottom-[180px] right-6 w-10 h-10 bg-black/60 rounded-full flex items-center justify-center border border-amber-500/30 hover:border-amber-500/60 transition-colors z-50"
+          data-testid="toggle-minimap"
+        >
+          <Eye className={`w-5 h-5 ${showMiniMap ? 'text-amber-400' : 'text-white/50'}`} />
+        </button>
+
+        {/* Vignette effect */}
+        <VignetteEffect intensity={0.4} />
+      </div>
+    </NPCWorldProvider>
   );
 };
 
