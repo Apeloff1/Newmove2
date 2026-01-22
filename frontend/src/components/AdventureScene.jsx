@@ -1,16 +1,39 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useAdventure } from '../context/AdventureContext';
-import { Hand, MessageCircle, MapPin, Fish, Gamepad2, Sparkles } from 'lucide-react';
+import { Hand, MessageCircle, MapPin, Fish, Gamepad2, Sparkles, Compass, Eye, Volume2 } from 'lucide-react';
+import { NPCWorldProvider, NPCWorldRenderer } from './EnhancedNPCWorld';
+import { WeatherOverlay, VignetteEffect, ParticleEmitter } from './UIEffects';
 
 // ============================================================================
-// ADVENTURE SCENE - The Main Play Area
+// ADVENTURE SCENE - The Main Play Area with Enhanced NPC System
 // ============================================================================
+
+// Pre-generated particle positions
+const AMBIENT_PARTICLES = Array.from({ length: 15 }, (_, i) => ({
+  id: i,
+  x: ((i * 17 + 7) % 90) + 5,
+  y: ((i * 23 + 11) % 80) + 10,
+  delay: (i * 0.4) % 3,
+  icon: ['✨', '💫', '🌊', '🐚', '⚓', '🦀'][i % 6],
+  scale: 0.8 + (i % 3) * 0.2,
+}));
+
+// Weather types by location
+const LOCATION_WEATHER = {
+  docks: { type: null, intensity: 0 },
+  mermaid_lagoon: { type: 'bubbles', intensity: 0.5 },
+  shipwreck_beach: { type: 'leaves', intensity: 0.3 },
+  treasure_cave: { type: null, intensity: 0 },
+  pirates_tavern: { type: null, intensity: 0 },
+  frozen_harbor: { type: 'snow', intensity: 0.8 },
+};
 
 export const AdventureScene = () => {
   const { 
     getCurrentLocation, 
     interactWithHotspot,
-    discoveredLocations
+    discoveredLocations,
+    currentTime,
   } = useAdventure();
   
   const location = getCurrentLocation();
